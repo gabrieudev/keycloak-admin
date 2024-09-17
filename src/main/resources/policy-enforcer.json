@@ -1,0 +1,21 @@
+{
+  "realm": "<keycloak_realm>",
+  "auth-server-url": "<keycloak_base_url>",
+  "resource": "<keycloak_backend_client_id>",
+  "credentials": {
+    "secret": "<keycloak_backend_client_secret>"
+  },
+  "http-method-as-scope": true,
+  "paths": [
+    {
+      "path": "/swagger-ui/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/v3/api-docs/*",
+      "enforcement-mode": "DISABLED"
+    }
+  ]
+}
+
+
