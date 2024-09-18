@@ -5,6 +5,7 @@ import com.api.keycloak_admin.exception.ResourceNotFoundException;
 import com.api.keycloak_admin.rest.dto.ChangeRoleRequest;
 import com.api.keycloak_admin.rest.dto.CreateUserRequest;
 import com.api.keycloak_admin.rest.dto.IdResponse;
+import com.api.keycloak_admin.rest.dto.UserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,6 +89,18 @@ public class UserService {
         if (response.getStatusCode().value() != 204) {
             log.error("Error while unassigning role to user at {}", Instant.now());
         }
+    }
+
+    public List<UserResponse> getUsers(
+            String token,
+            int page,
+            int size
+    ) {
+        ResponseEntity<List<UserResponse>> response = keycloakAdminClient.getUsers(token, page, size);
+        if (response.getStatusCode().value() != 200) {
+            log.error("Error while getting users at {}", Instant.now());
+        }
+        return response.getBody();
     }
 
 }

@@ -2,6 +2,7 @@ package com.api.keycloak_admin.rest.controller;
 
 import com.api.keycloak_admin.rest.dto.ChangeRoleRequest;
 import com.api.keycloak_admin.rest.dto.CreateUserRequest;
+import com.api.keycloak_admin.rest.dto.UserResponse;
 import com.api.keycloak_admin.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -89,5 +92,20 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("Role unassigned successfully");
     }
 
+    @Operation(
+            summary = "Get all users",
+            description = "Endpoint that gets all users",
+            tags = "User"
+    )
+    @GetMapping
+    public ResponseEntity<List<UserResponse>> getUsers(
+            @RequestHeader(value = "Authorization", required = false)
+            @Parameter(hidden = true)
+            String token,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUsers(token, page, size));
+    }
 
 }

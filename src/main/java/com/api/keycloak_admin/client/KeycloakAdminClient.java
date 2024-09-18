@@ -1,9 +1,6 @@
 package com.api.keycloak_admin.client;
 
-import com.api.keycloak_admin.rest.dto.CreateRoleRequest;
-import com.api.keycloak_admin.rest.dto.CreateUserRequest;
-import com.api.keycloak_admin.rest.dto.IdResponse;
-import com.api.keycloak_admin.rest.dto.RoleDTO;
+import com.api.keycloak_admin.rest.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,6 +73,13 @@ public interface KeycloakAdminClient {
             @PathVariable("user-uuid") UUID userId,
             @PathVariable("client-uuid") UUID clientUuid,
             @RequestBody List<RoleDTO> roles
+    );
+
+    @GetMapping("/users")
+    ResponseEntity<List<UserResponse>> getUsers(
+            @RequestHeader("Authorization") String token,
+            @RequestParam("first") int page,
+            @RequestParam("max") int size
     );
 
 }
